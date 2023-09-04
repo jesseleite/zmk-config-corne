@@ -1,56 +1,215 @@
-/*
- * Copyright (c) 2020 The ZMK Contributors
- *
- * SPDX-License-Identifier: MIT
- */
-
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 
+// Layers
+#define DEFAULT 0
+#define WINDOWS 1
+#define LOWER 2
+#define RAISE 3
+#define MASH 4
+#define WINDOWS_MASH 5
+
+// Aliases
+#define OPTAB LALT TAB       // Mod-Tap shorthand for OPTION when held, TAB when tapped
+#define CTESC LCTRL ESC      // Mod-Tap shorthand for CTRL when held, ESC when tapped
+#define RAI0  RAISE N0       // Mod-Tap shorthand for RAISE layer when held, or numpad 0 when typed
+#define SPOTL LG(SPACE)      // Key-Press shorthand for CMD-SPACE Spotlight / Raycast / etc. search
+#define TERM  LG(ESC)        // Key-Press shorthand for CMD-ESC for summoning / toggling terminal
+#define MPREV C_PREV         // Key-Press shorthand for PREV media key
+#define MNEXT C_NEXT         // Key-Press shorthand for NEXT media key
+#define VOLUP C_VOL_UP       // Key-Press shorthand for VOLUME UP media key
+#define VOLDN C_VOL_DN       // Key-Press shorthand for VOLUME DOWN media key
+#define MPLAY C_PP           // Key-Press shorthand for PLAY / PAUSE media key
+#define MMUTE C_MUTE         // Key-Press shorthand for MUTE media key
+#define SCRL  LC(LEFT)       // Key-Press shorthand for Mission control space left
+#define SCRR  LC(RIGHT)      // Key-Press shorthand for Mission control space right
+#define BROL  LG(LA(LEFT))   // Key-Press shorthand for browser tab left
+#define BROR  LG(LA(RIGHT))  // Key-Press shorthand for browser tab right
+#define ZIN   LG(PLUS)       // Key-Press shorthand for zoom in
+#define ZOUT  LG(MINUS)      // Key-Press shorthand for zoom out
+#define ZRES  LG(N0)         // Key-Press shorthand for zoom reset
+#define FQUIT LG(LA(ESC))    // Key-Press shorthand for force quit applications dialog
+
+// Windows Specific Aliases
+#define OPBSL LALT BSLH      // Mod-Tap shorthand for OPTION when held, BSLH when tapped
+#define WINQT LGUI SQT       // Mod-Tap shorthand for WIN when held, SQT when tapped
+#define SCRLW LG(LC(LEFT))   // Key-Press shorthand for virtual desktop left in Windows
+#define SCRRW LG(LC(RIGHT))  // Key-Press shorthand for virtual desktop right in Windows
+#define BROLW LC(LS(TAB))    // Key-Press shorthand for browser tab left in Windows
+#define BRORW LC(TAB)        // Key-Press shorthand for browser tab right in Windows
+#define ZINW  LC(PLUS)       // Key-Press shorthand for zoom in Windows
+#define ZOUTW LC(MINUS)      // Key-Press shorthand for zoom out in Windows
+#define ZRESW LC(N0)         // Key-Press shorthand for zoom reset in Windows
+#define CADW  LC(LA(DEL))    // Key-Press shorthand for CTRL-ALT-DEL in Windows
+
+
 / {
-        keymap {
-                compatible = "zmk,keymap";
 
-                default_layer {
-// -----------------------------------------------------------------------------------------
-// |  TAB |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BKSP |
-// | CTRL |  A  |  S  |  D  |  F  |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
-// | SHFT |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  /  | ESC  |
-//                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
-                        bindings = <
-   &kp TAB   &kp Q &kp W &kp E &kp R &kp T   &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSLH
-   &kp LCTRL &kp A &kp S &kp D &kp F &kp G   &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
-   &kp LSHFT &kp Z &kp X &kp C &kp V &kp B   &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp RSHFT
-                  &kp LGUI &mo 1 &kp SPACE   &kp RET &mo 2 &kp BSPC
-                        >;
-                };
-                lower_layer {
-// -----------------------------------------------------------------------------------------
-// |  TAB |  1  |  2  |  3  |  4  |  5  |   |  6  |  7  |  8  |  9  |  0  | BKSP |
-// | BTCLR| BT1 | BT2 | BT3 | BT4 | BT5 |   | LFT | DWN |  UP | RGT |     |      |
-// | SHFT |     |     |     |     |     |   |     |     |     |     |     |      |
-//                    | GUI |     | SPC |   | ENT |     | ALT |
-                        bindings = <
-   &kp TAB    &kp N1       &kp N2       &kp N3       &kp N4       &kp N5         &kp N6   &kp N7   &kp N8 &kp N9    &kp N0 &kp BSPC
-   &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4   &kp LEFT &kp DOWN &kp UP &kp RIGHT &trans &trans
-   &kp LSHFT  &trans       &trans       &trans       &trans       &trans         &trans   &trans   &trans &trans    &trans &trans
-                                    &kp LGUI     &trans       &kp SPACE      &kp RET  &trans   &kp RALT
-                        >;
-                };
+    keymap {
+        compatible = "zmk,keymap";
 
-                raise_layer {
-// -----------------------------------------------------------------------------------------
-// |  TAB |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  (  |  )  | BKSP |
-// | CTRL |     |     |     |     |     |   |  -  |  =  |  [  |  ]  |  \  |  `   |
-// | SHFT |     |     |     |     |     |   |  _  |  +  |  {  |  }  | "|" |  ~   |
-//                    | GUI |     | SPC |   | ENT |     | ALT |
-                        bindings = <
-   &kp  TAB  &kp EXCL &kp AT &kp HASH &kp DLLR &kp PRCNT   &kp CARET &kp AMPS  &kp KP_MULTIPLY &kp LPAR &kp RPAR &kp BSPC
-   &kp LCTRL &trans   &trans &trans   &trans   &trans      &kp MINUS &kp EQUAL &kp LBKT        &kp RBKT &kp BSLH &kp GRAVE
-   &kp LSHFT &trans   &trans &trans   &trans   &trans      &kp UNDER &kp PLUS  &kp LBRC        &kp RBRC &kp PIPE &kp TILDE
-                             &kp LGUI &trans   &kp SPACE   &kp RET   &trans    &kp RALT
-                        >;
-                };
+        default_layer {
+            bindings = <
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //   OPT TAB    Q          W          E          R          T                Y          U          I          O          P          \ |
+                 &mt OPTAB  &kp Q      &kp W      &kp E      &kp R      &kp T            &kp Y      &kp U      &kp I      &kp O      &kp P      &kp BSLH
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //   CTRL ESC   A          S          D          F          G                H          J          K          L          ; :        ' "
+                 &mt CTESC  &kp A      &kp S      &kp D      &kp F      &kp G            &kp H      &kp J      &kp K      &kp L      &kp SEMI   &kp SQT
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //   SHIFT (    Z          X          C          V          B                N          M          , <        . >        / ?        SHIFT )
+                 &lscsh     &kp Z      &kp X      &kp C      &kp V      &kp B            &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH   &rscsh
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //                                    CMD        LOWER      SPACE            ENTER      RAISE      BKSP DEL
+                                                  &kp LGUI   &mo LOWER  &kp SPACE        &kp ENTER  &mo RAISE  &bkspd
+            //                                  +----------+----------+----------+     +----------+----------+----------+
+            >;
         };
+
+        windows_layer {
+            bindings = <
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //   TAB                                                                                                                            OPT \ |
+                 &kp TAB    &trans     &trans     &trans     &trans     &trans           &trans     &trans     &trans     &trans     &trans     &mt OPBSL
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //   CTRL                                                                                                                           WIN ' "
+                 &kp LCTRL  &trans     &trans     &trans     &trans     &trans           &trans     &trans     &trans     &trans     &trans     &mt WINQT
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //
+                 &trans     &trans     &trans     &trans     &trans     &trans           &trans     &trans     &trans     &trans     &trans     &trans
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //                                    CTRL
+                                                  &kp LCTRL  &trans     &trans           &trans     &trans     &trans
+            //                                  +----------+----------+----------+     +----------+----------+----------+
+            >;
+        };
+
+        lower_layer {
+            bindings = <
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //   `          !          @          #          $          %                ~          7          8          9          =          +
+                 &kp GRAVE  &kp EXCL   &kp AT     &kp HASH   &kp DLLR   &kp PRCNT        &kp TILDE  &kp N7     &kp N8     &kp N9     &kp EQUAL  &kp PLUS
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //   OPEN TERM  ^          &          *          OPEN APP   <                >          4          5          6          -          _
+                 &kp TERM   &kp CARET  &kp AMPS   &kp ASTRK  &kp F13    &kp LT           &kp GT     &kp N4     &kp N5     &kp N6     &kp MINUS  &kp UNDER
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //   {          \          .          ,          RUN MACRO  [                ]          1          2          3          4          5
+                 &kp LBRC   &kp BSLH   &kp DOT    &kp COMMA  &kp F14    &kp LBKT         &kp RBKT   &kp N1     &kp N2     &kp N3     &kp FSLH   &kp RBRC
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //                                                                                      0 RAISE
+                                                  &trans     &trans     &trans           &trans     &lt RAI0   &trans
+            //                                  +----------+----------+----------+     +----------+----------+----------+
+            >;
+        };
+
+        raise_layer {
+            bindings = <
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //              FUNCTION KEYS 1-5                                            PAGE NAVIGATION                                        ESC
+                 &none      &kp F1     &kp F2     &kp F3     &kp F4     &kp F5           &kp HOME   &kp PG_DN  &kp PG_UP  &kp END    &none      &kp ESC
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //              FUNCTION KEYS 6-10                                           HJKL ARROW KEYS
+                 &none      &kp F6     &kp F7     &kp F8     &kp F9     &kp F10          &kp LEFT   &kp DOWN   &kp UP     &kp RIGHT  &none      &none
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //              FUNCTION KEYS 11-12                                          MEDIA KEYS
+                 &none      &kp F11    &kp F12    &none      &none      &none            &kp MPREV  &kp VOLDN  &kp VOLUP  &kp MNEXT  &kp MMUTE  &kp MPLAY
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //                                                          SEARCH
+                                                  &trans     &trans     &kp SPOTL        &trans     &trans     &trans
+            //                                  +----------+----------+----------+     +----------+----------+----------+
+            >;
+        };
+
+        mash_both_layers {
+            bindings = <
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //  TOGGLE LAYER                                        RESET / FLASH        SCREEN SWITCHING                                    TOGGLE LAYER
+                &to DEFAULT &none      &none      &none      &none    &bootloader        &kp SCRL   &none      &none      &kp SCRR   &none    &to WINDOWS
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //                                                                           BROWSER TAB SWITCHING                                 FORCE QUIT
+                 &none      &none      &none      &none      &none      &none            &kp BROL   &none      &none      &kp BROR   &none      &kp FQUIT
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //                                                                           ZOOM IN, OUT, AND RESET
+                 &none      &none      &none      &none      &none      &none            &kp ZRES   &kp ZOUT   &kp ZIN    &none      &none      &none
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //
+                                                  &trans     &trans     &trans           &trans     &trans     &trans
+            //                                  +----------+----------+----------+     +----------+----------+----------+
+            >;
+        };
+
+        windows_mash_both_layers {
+            bindings = <
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //  TOGGLE LAYER                                        RESET / FLASH        SCREEN SWITCHING                                    TOGGLE LAYER
+                &to DEFAULT &none      &none      &none      &none    &bootloader        &kp SCRLW  &none      &none      &kp SCRRW  &none    &to WINDOWS
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //                                                                           BROWSER TAB SWITCHING                               CTRL-ALT-DEL
+                 &none      &none      &none      &none      &none      &none            &kp BROLW  &none      &none      &kp BRORW  &none      &kp CADW
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //                                                                           ZOOM IN, OUT, AND RESET
+                 &none      &none      &none      &none      &none      &none            &kp ZRESW  &kp ZOUTW  &kp ZINW   &none      &none      &none
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //
+                                                  &trans     &trans     &trans           &trans     &trans     &trans
+            //                                  +----------+----------+----------+     +----------+----------+----------+
+            >;
+        };
+
+    };
+
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        mash_both_layers {
+            if-layers = <LOWER RAISE>;
+            then-layer = <MASH>;
+        };
+        windows_mash_both_layers {
+            if-layers = <WINDOWS LOWER RAISE>;
+            then-layer = <WINDOWS_MASH>;
+        };
+    };
+
+    behaviors {
+        lscsh: left_space_cadet_shift {
+            compatible = "zmk,behavior-mod-morph";
+            label = "LEFT_SPACE_CADET_SHIFT";
+            #binding-cells = <0>;
+            bindings = <&mt LSHFT LPAR>, <&close_and_open_parens>;
+            mods = <(MOD_RSFT)>;
+        };
+
+        rscsh: right_space_cadet_shift {
+            compatible = "zmk,behavior-mod-morph";
+            label = "RIGHT_SPACE_CADET_SHIFT";
+            #binding-cells = <0>;
+            bindings = <&mt RSHFT RPAR>, <&open_and_close_parens>;
+            mods = <(MOD_LSFT)>;
+        };
+
+        bkspd: backspace_or_shift_delete {
+            compatible = "zmk,behavior-mod-morph";
+            label = "BACKSPACE_OR_SHIFT_DELETE";
+            #binding-cells = <0>;
+            bindings = <&kp BACKSPACE>, <&kp DELETE>;
+            mods = <(MOD_LSFT)>;
+        };
+    };
+
+    macros {
+        open_and_close_parens: open_and_close_parens {
+            label = "ZM_open_and_close_parens";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp LPAR &kp RPAR>;
+        };
+
+        close_and_open_parens: close_and_open_parens {
+            label = "ZM_close_and_open_parens";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp RPAR &kp LPAR>;
+        };
+    };
 };
