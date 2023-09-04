@@ -9,6 +9,8 @@
 #define RAISE 3
 #define MASH 4
 #define WINDOWS_MASH 5
+#define WINDOWS_NUMBERS 6
+#define WINDOWS_FUNCTION_KEYS 7
 
 // Aliases
 #define OPTAB LALT TAB       // Mod-Tap shorthand for OPTION when held, TAB when tapped
@@ -75,9 +77,9 @@
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+--[ COMBO FOR WIN ]--+
             //
                  &trans     &trans     &trans     &trans     &trans     &trans           &trans     &trans     &trans     &trans     &trans     &trans
-            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-            //                                    CTRL
-                                                  &kp LCTRL  &trans     &trans           &trans     &trans     &trans
+            // +----------+----------+----------+----------[ TAP DANCE ]---------+     +----------+----------+----------+----------+----------+----------+
+            //                                    CTRL       LOWER
+                                                  &kp LCTRL  &wtd LOWER &trans           &trans     &trans     &trans
             //                                  +----------+----------+----------+     +----------+----------+----------+
             >;
         };
@@ -154,6 +156,34 @@
             >;
         };
 
+        windows_gaming_numbers {
+            bindings = <
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+                 &none      &kp N1     &kp N2     &kp N3     &kp N4     &kp N5           &none      &none      &none      &none      &none      &none
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+                 &none      &kp N6     &kp N7     &kp N8     &kp N9     &kp N0           &none      &none      &none      &none      &none      &none
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+                 &none      &none      &none      &none      &none      &none            &none      &none      &none      &none      &none      &none
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+                                                  &trans     &trans     &trans           &trans     &trans     &trans
+            //                                  +----------+----------+----------+     +----------+----------+----------+
+            >;
+        };
+
+        windows_gaming_function_keys {
+            bindings = <
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+                 &none      &kp F1     &kp F2     &kp F3     &kp F4     &kp F5           &none      &none      &none      &none      &none      &none
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+                 &none      &kp F6     &kp F7     &kp F8     &kp F9     &kp F10          &none      &none      &none      &none      &none      &none
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+                 &none      &none      &none      &none      &none      &none            &none      &none      &none      &none      &none      &none
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+                                                  &trans     &trans     &trans           &trans     &trans     &trans
+            //                                  +----------+----------+----------+     +----------+----------+----------+
+            >;
+        };
+
     };
 
     conditional_layers {
@@ -191,6 +221,23 @@
             #binding-cells = <0>;
             bindings = <&kp BACKSPACE>, <&kp DELETE>;
             mods = <(MOD_LSFT)>;
+        };
+
+        wtd: lower_with_tap_dance_for_windows {
+            compatible = "zmk,behavior-hold-tap";
+            label = "WINDOWS_LOWER_PLUS_TAP_DANCE";
+            #binding-cells = <2>;
+            tapping-term-ms = <150>;
+            flavor = "hold-preferred";
+            bindings = <&mo>, <&windows_extra_gaming_layers_td>;
+        };
+
+        windows_extra_gaming_layers_td: windows_lower_tap_dance {
+            compatible = "zmk,behavior-tap-dance";
+            label = "WINDOWS_LOWER_TAP_DANCE";
+            #binding-cells = <0>;
+            tapping-term-ms = <50>;
+            bindings = <&sl WINDOWS_NUMBERS>, <&sl WINDOWS_FUNCTION_KEYS>;
         };
     };
 
