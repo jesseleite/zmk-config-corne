@@ -41,7 +41,6 @@
 #define ZRESW LC(N0)         // Key-Press shorthand for zoom reset in Windows
 #define CADW  LC(LA(DEL))    // Key-Press shorthand for CTRL-ALT-DEL in Windows
 
-
 / {
 
     keymap {
@@ -65,7 +64,7 @@
             >;
         };
 
-        windows_layer {
+        windows_and_gaming_friendly_layer {
             bindings = <
             // +--[ COMBO FOR ESC ]--+----------+----------+----------+----------+     +----------+----------+----------+----------+--[ COMBO FOR DEL ]--+
             //   TAB
@@ -196,15 +195,15 @@
     };
 
     macros {
-        open_and_close_parens: open_and_close_parens {
-            label = "ZM_open_and_close_parens";
+        open_and_close_parens: open_and_close_parens_for_improved_space_cadet_shifts {
+            label = "OPEN_AND_CLOSE_PARENS";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&macro_tap &kp LPAR &kp RPAR>;
         };
 
-        close_and_open_parens: close_and_open_parens {
-            label = "ZM_close_and_open_parens";
+        close_and_open_parens: close_and_open_parens_for_improved_space_cadet_shifts {
+            label = "CLOSE_AND_OPEN_PARENS";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&macro_tap &kp RPAR &kp LPAR>;
