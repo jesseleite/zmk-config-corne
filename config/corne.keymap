@@ -98,7 +98,7 @@
                                                   &kp LCTRL  &trans     &trans           &trans     &trans     &trans
             //                                  +----------+----------+----------+     +----------+----------+----------+
             //
-            // * Differences from above Mac default layer:
+            // * Differences from above default Mac layer:
             //   - CTRL instead of CMD on thumb for easy copy/paste/etc. in Windows
             //   - In standard backslash position, hold for ALT, or tap for `\`
             //   - In standard quote position, hold for WIN, or tap for `'`
@@ -121,7 +121,7 @@
                                                   &kp LCTRL  &ltd LOWER &trans           &trans     &trans     &trans
             //                                  +----------+----------+----------+     +----------+----------+----------+
             //
-            // * Differences from above Windows layer:
+            // * Differences from default Windows layer:
             //   - Remove mod-tap functionality in left-most column to prevent unwanted key-presses while gaming
             //   - Combo TAB+Q in top left corner for easy access to ESC while gaming
             //   - LOWER layer tap-tance functionality added for easy access to one-shot numbers and function keys with right hand on mouse
@@ -140,7 +140,7 @@
             //   OPEN TERM  ^          &          *          OPEN APP   <                >          4          5          6          -          _
                  &kp TERM   &kp CARET  &kp AMPS   &kp ASTRK  &kp F13    &kp LT           &kp GT     &kp N4     &kp N5     &kp N6     &kp MINUS  &kp UNDER
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-            //   {          \          .          ,          RUN MACRO  [                ]          1          2          3          4          5
+            //   {          \          .          ,          RUN MACRO  [                ]          1          2          3          /          }
                  &kp LBRC   &kp BSLH   &kp DOT    &kp COMMA  &kp F14    &kp LBKT         &kp RBKT   &kp N1     &kp N2     &kp N3     &kp FSLH   &kp RBRC
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
             //                                                                                      0 RAISE
