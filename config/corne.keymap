@@ -3,14 +3,15 @@
 #include <dt-bindings/zmk/bt.h>
 
 // Layers
-#define DEFAULT 0
-#define WINDOWS 1
-#define LOWER 2
-#define RAISE 3
-#define MASH 4
-#define WINDOWS_MASH 5
-#define WINDOWS_NUMBERS 6
-#define WINDOWS_FUNCTION_KEYS 7
+#define MAC 0
+#define WIN 1
+#define GAME 2
+#define LOWER 3
+#define RAISE 4
+#define MASH 5
+#define WIN_MASH 6
+#define WIN_NUMBERS 7
+#define WIN_FUNCTION_KEYS 8
 
 // Aliases
 #define OPTAB LALT TAB       // Mod-Tap shorthand for OPTION when held, TAB when tapped
@@ -34,6 +35,8 @@
 #define FQUIT LG(LA(ESC))    // Key-Press shorthand for force quit applications dialog
 
 // Windows Specific Aliases
+#define ABSL  LALT BSLH      // Mod-Tap shorthand for ALT when held, BSLH when tapped
+#define WSQT  LGUI SQT       // Mod-Tap shorthand for WIN when held, SQT when tapped
 #define SCRLW LG(LC(LEFT))   // Key-Press shorthand for virtual desktop left in Windows
 #define SCRRW LG(LC(RIGHT))  // Key-Press shorthand for virtual desktop right in Windows
 #define BROLW LC(LS(TAB))    // Key-Press shorthand for browser tab left in Windows
@@ -48,9 +51,9 @@
     keymap {
         compatible = "zmk,keymap";
 
-        default_layer {
+        default_mac_layer {
             bindings = <
-            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+--[ COMBO FOR DEL ]--+
             //   OPT TAB    Q          W          E          R          T                Y          U          I          O          P          \ |
                  &mt OPTAB  &kp Q      &kp W      &kp E      &kp R      &kp T            &kp Y      &kp U      &kp I      &kp O      &kp P      &kp BSLH
             // +----------+----------+--[ HYPER + BIG HYPER COMBOS ]--+----------+     +----------+----------+----------+----------+----------+----------+
@@ -63,24 +66,68 @@
             //                                    CMD        LOWER      SPACE            ENTER      RAISE      BKSP DEL
                                                   &kp LGUI   &mo LOWER  &kp SPACE        &kp ENTER  &mo RAISE  &bkspd
             //                                  +----------+----------+----------+     +----------+----------+----------+
+            //
+            // * Notes:
+            //   - In standard CAPS key position, hold for CTRL, or tap for ESC
+            //   - In standard TAB key position, hold for OPT, or tap for TAB
+            //   - In standard SHIFT key positions, hold for SHIFT, or tap for open `(` and close `)` parentheses (left and right respectively)
+            //   - Combo D+F keys for HYPER (CTRL+OPT+CMD)
+            //   - Combo S+D+F keys for BIG HYPER (SHIFT+CTRL+OPT+CMD)
+            //   - Combo P+\ in top right corner for forward DEL
+            //   - Shift backspace for forward delete
+            //   - See other layers for more:
+            //     - LOWER layer for symbols, numpad, summon apps function, summon terminal function, run macros function, etc.
+            //     - RAISE layer for hjkl arrows, page navigation keys, media keys, function keys, spotlight search, etc.
+            //     - MASH layer (LOWER+RAISE) for default layer toggling, screen switching, browser tab switching, zoom helpers, etc.
             >;
         };
 
-        windows_and_gaming_friendly_layer {
+        windows_layer {
             bindings = <
-            // +--[ COMBO FOR ESC ]--+----------+----------+----------+----------+     +----------+----------+----------+----------+--[ COMBO FOR DEL ]--+
-            //   TAB
-                 &kp TAB    &trans     &trans     &trans     &trans     &trans           &trans     &trans     &trans     &trans     &trans     &trans
-            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+--[ COMBO FOR ALT ]--+
-            //   CTRL
-                 &kp LCTRL  &trans     &trans     &trans     &trans     &trans           &trans     &trans     &trans     &trans     &trans     &trans
-            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+--[ COMBO FOR WIN ]--+
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+---------------------+
+            //                                                                                                                                  ALT \ |
+                 &trans     &trans     &trans     &trans     &trans     &trans           &trans     &trans     &trans     &trans     &trans     &mtt ABSL
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+---------------------+
+            //                                                                                                                                  WIN ' "
+                 &trans     &trans     &trans     &trans     &trans     &trans           &trans     &trans     &trans     &trans     &trans     &mtt WSQT
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
             //
                  &trans     &trans     &trans     &trans     &trans     &trans           &trans     &trans     &trans     &trans     &trans     &trans
-            // +----------+----------+----------+----------[ TAP DANCE ]---------+     +----------+----------+----------+----------+----------+----------+
-            //                                    CTRL       LOWER
-                                                  &kp LCTRL  &wtd LOWER &trans           &trans     &trans     &trans
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //                                    CTRL
+                                                  &kp LCTRL  &trans     &trans           &trans     &trans     &trans
             //                                  +----------+----------+----------+     +----------+----------+----------+
+            //
+            // * Differences from above Mac default layer:
+            //   - CTRL instead of CMD on thumb for easy copy/paste/etc. in Windows
+            //   - In standard backslash position, hold for ALT, or tap for `\`
+            //   - In standard quote position, hold for WIN, or tap for `'`
+            >;
+        };
+
+        windows_gaming_layer {
+            bindings = <
+            // +--[ COMBO FOR ESC ]--+----------+----------+----------+----------+     +----------+----------+----------+----------+---------------------+
+            //   TAB                                                                                                                            ALT \ |
+                 &kp TAB    &trans     &trans     &trans     &trans     &trans           &trans     &trans     &trans     &trans     &trans     &mtt ABSL
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+---------------------+
+            //   CTRL                                                                                                                           WIN ' "
+                 &kp LCTRL  &trans     &trans     &trans     &trans     &trans           &trans     &trans     &trans     &trans     &trans     &mtt WSQT
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //
+                 &trans     &trans     &trans     &trans     &trans     &trans           &trans     &trans     &trans     &trans     &trans     &trans
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //                                    CTRL       LOWER TAP
+                                                  &kp LCTRL  &ltd LOWER &trans           &trans     &trans     &trans
+            //                                  +----------+----------+----------+     +----------+----------+----------+
+            //
+            // * Differences from above Windows layer:
+            //   - Remove mod-tap functionality in left-most column to prevent unwanted key-presses while gaming
+            //   - Combo TAB+Q in top left corner for easy access to ESC while gaming
+            //   - LOWER layer tap-tance functionality added for easy access to one-shot numbers and function keys with right hand on mouse
+            //     - Tap once for one-shot WIN_NUMBERS layer (great for weapon selection, unit group selection, etc.)
+            //     - Tap twice for one-shot WIN_FUNCTION_KEYS layer (for games that use function keys)
+            //     - Hold for standard LOWER layer
             >;
         };
 
@@ -99,14 +146,22 @@
             //                                                                                      0 RAISE
                                                   &trans     &trans     &trans           &trans     &lt RAI0   &trans
             //                                  +----------+----------+----------+     +----------+----------+----------+
+            //
+            // * Notes:
+            //   - Almost all symbols accessible on this layer
+            //   - Numpad under right hand
+            //   - Summon terminal in standard CAPS position (which posts CMD+ESC for handling in OS)
+            //   - Summon apps modal in `F` position (for 'find' or open app, which posts F13 for handling in OS)
+            //   - Run macro modal in `V` position (which posts F14 for handling in OS)
+            //     - The above three mentioned functions can be configured via Hammerspoon, Autohotkey, etc.
             >;
         };
 
         raise_layer {
             bindings = <
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-            //              FUNCTION KEYS 1-5                                            PAGE NAVIGATION                                        ESC
-                 &none      &kp F1     &kp F2     &kp F3     &kp F4     &kp F5           &kp HOME   &kp PG_DN  &kp PG_UP  &kp END    &none      &kp ESC
+            //              FUNCTION KEYS 1-5                                            PAGE NAVIGATION
+                 &none      &kp F1     &kp F2     &kp F3     &kp F4     &kp F5           &kp HOME   &kp PG_DN  &kp PG_UP  &kp END    &none      &none
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
             //              FUNCTION KEYS 6-10                                           HJKL ARROW KEYS
                  &none      &kp F6     &kp F7     &kp F8     &kp F9     &kp F10          &kp LEFT   &kp DOWN   &kp UP     &kp RIGHT  &none      &none
@@ -117,42 +172,63 @@
             //                                                          SEARCH
                                                   &trans     &trans     &kp SPOTL        &trans     &trans     &trans
             //                                  +----------+----------+----------+     +----------+----------+----------+
+            //
+            // * Notes:
+            //   - Arrow keys in HJKL position
+            //   - Page navigation (HOME, PG DOWN, PG UP, END) in HJKL-like position, but up one row
+            //   - Media keys (PREV, VOL DOWN, VOL UP, NEXT, etc.) in HJKL-like position, but down one row
+            //     - These are intentionally on raise layer so that you can play/pause/mute with one hand while on phone, etc.
+            //   - Function keys on left split
+            //   - Spotlight search on SPACE key
             >;
         };
 
         mash_both_layers {
             bindings = <
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-            //  TOGGLE LAYER                                        RESET / FLASH        SCREEN SWITCHING                                    TOGGLE LAYER
-                &to DEFAULT &none      &none      &none      &none    &bootloader        &kp SCRL   &none      &none      &kp SCRR   &none    &to WINDOWS
+            //  MAC LAYER              WINDOWS LAYER                                     SCREEN SWITCHING                                      FORCE QUIT
+                &to MAC     &none      &to WIN    &none      &none      &none            &kp SCRL   &none      &none      &kp SCRR   &none      &kp FQUIT
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-            //                                                                           BROWSER TAB SWITCHING                                 FORCE QUIT
-                 &none      &none      &none      &none      &none      &none            &kp BROL   &none      &none      &kp BROR   &none      &kp FQUIT
+            //                                                       GAMING LAYER        BROWSER TAB SWITCHING
+                 &none      &none      &none      &none      &none       &to GAME        &kp BROL   &none      &none      &kp BROR   &none      &none
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-            //                                                                           ZOOM IN, OUT, AND RESET
-                 &none      &none      &none      &none      &none      &none            &kp ZRES   &kp ZOUT   &kp ZIN    &none      &none      &none
+            //             ZMK FLASH                                                     ZOOM IN, OUT, AND RESET
+                 &none     &bootloader &none      &none      &none      &none            &kp ZRES   &kp ZOUT   &kp ZIN    &none      &none      &none
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
             //
                                                   &trans     &trans     &trans           &trans     &trans     &trans
             //                                  +----------+----------+----------+     +----------+----------+----------+
+            //
+            // * Notes:
+            //   - Many call this the ADJUST layer, but we're calling it MASH because you mash both LOWER + RAISE keys
+            //   - Hit top left key to toggle default Mac layer
+            //   - Hit `W` position to toggle Windows layer
+            //   - Hit `G` position to toggle Windows Gaming layer
+            //   - Hit `Z` position to put central half into ZMK bootloader mode for flashing keymap (can also double press central's reset switch)
+            //   - HJKL-like screen switching, browser tab switching, and zoom in/out/reset helpers on right split
+            //   - Hit top right key to open Mac's `Force Quit Applications` dialog
             >;
         };
 
         windows_mash_both_layers {
             bindings = <
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-            //  TOGGLE LAYER                                        RESET / FLASH        SCREEN SWITCHING                                    TOGGLE LAYER
-                &to DEFAULT &none      &none      &none      &none    &bootloader        &kp SCRLW  &none      &none      &kp SCRRW  &none    &to WINDOWS
+            //  MAC LAYER              WINDOWS LAYER                                     SCREEN SWITCHING                                    CTRL+ALT+DEL
+                &to MAC     &none      &to WIN    &none      &none      &none            &kp SCRLW  &none      &none      &kp SCRRW  &none      &kp CADW
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-            //                                                                           BROWSER TAB SWITCHING                               CTRL-ALT-DEL
-                 &none      &none      &none      &none      &none      &none            &kp BROLW  &none      &none      &kp BRORW  &none      &kp CADW
+            //                                                       GAMING LAYER        BROWSER TAB SWITCHING
+                 &none      &none      &none      &none      &none       &to GAME        &kp BROLW  &none      &none      &kp BRORW  &none      &none
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-            //                                                                           ZOOM IN, OUT, AND RESET
-                 &none      &none      &none      &none      &none      &none            &kp ZRESW  &kp ZOUTW  &kp ZINW   &none      &none      &none
+            //             ZMK FLASH                                                     ZOOM IN, OUT, AND RESET
+                 &none     &bootloader &none      &none      &none      &none            &kp ZRESW  &kp ZOUTW  &kp ZINW   &none      &none      &none
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
             //
                                                   &trans     &trans     &trans           &trans     &trans     &trans
             //                                  +----------+----------+----------+     +----------+----------+----------+
+            //
+            // * Differences from above MASH layer:
+            //   - HJKL-like screen switching hotkeys are adjusted to work in Windows
+            //   - Hit top right key to CTRL+ALT+DELETE in Windows
             >;
         };
 
@@ -167,6 +243,9 @@
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
                                                   &trans     &trans     &trans           &trans     &trans     &trans
             //                                  +----------+----------+----------+     +----------+----------+----------+
+            //
+            // * Note: This is only meant to be accessed via the LOWER key tap-dance on the GAME layer
+            //   - Single tap to access numbers with left hand, while right hand is on mouse
             >;
         };
 
@@ -181,6 +260,9 @@
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
                                                   &trans     &trans     &trans           &trans     &trans     &trans
             //                                  +----------+----------+----------+     +----------+----------+----------+
+            //
+            // * Note: This is only meant to be accessed via the LOWER key tap-dance on the GAME layer
+            //   - Double tap to function keys with left hand, while right hand is on mouse
             >;
         };
 
@@ -193,12 +275,25 @@
             then-layer = <MASH>;
         };
         windows_mash_both_layers {
-            if-layers = <WINDOWS LOWER RAISE>;
-            then-layer = <WINDOWS_MASH>;
+            if-layers = <WIN LOWER RAISE>;
+            then-layer = <WIN_MASH>;
+        };
+        windows_gaming_mash_both_layers {
+            if-layers = <GAME LOWER RAISE>;
+            then-layer = <WIN_MASH>;
         };
     };
 
     behaviors {
+        mtt: mod_tap_with_tap_preferred {
+            compatible = "zmk,behavior-hold-tap";
+            label = "MOD_TAP_TAP_PREFERRED";
+            #binding-cells = <2>;
+            tapping-term-ms = <100>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+        };
+
         lscsh: left_space_cadet_shift {
             compatible = "zmk,behavior-mod-morph";
             label = "LEFT_SPACE_CADET_SHIFT";
@@ -223,21 +318,21 @@
             mods = <(MOD_LSFT)>;
         };
 
-        wtd: lower_with_tap_dance_for_windows {
+        ltd: layer_tap_dance_for_gaming {
             compatible = "zmk,behavior-hold-tap";
             label = "WINDOWS_LOWER_PLUS_TAP_DANCE";
             #binding-cells = <2>;
             tapping-term-ms = <150>;
             flavor = "hold-preferred";
-            bindings = <&mo>, <&windows_extra_gaming_layers_td>;
+            bindings = <&mo>, <&gaming_extra_layers>;
         };
 
-        windows_extra_gaming_layers_td: windows_lower_tap_dance {
+        gaming_extra_layers: gaming_extra_layers {
             compatible = "zmk,behavior-tap-dance";
             label = "WINDOWS_LOWER_TAP_DANCE";
             #binding-cells = <0>;
             tapping-term-ms = <50>;
-            bindings = <&sl WINDOWS_NUMBERS>, <&sl WINDOWS_FUNCTION_KEYS>;
+            bindings = <&sl WIN_NUMBERS>, <&sl WIN_FUNCTION_KEYS>;
         };
     };
 
@@ -269,25 +364,16 @@
             key-positions = <14 15 16>;
             bindings = <&kp LS(LG(LA(LCTRL)))>;
         };
-        combo_esc_in_corner {
-            timeout-ms = <50>;
-            key-positions = <0 1>;
-            bindings = <&kp ESC>;
-        };
-        combo_del_in_corner {
+        combo_del_in_top_right_corner {
             timeout-ms = <50>;
             key-positions = <10 11>;
             bindings = <&kp DEL>;
         };
-        combo_alt_for_windows {
+        combo_esc_in_top_left_corner_for_gaming {
             timeout-ms = <50>;
-            key-positions = <22 23>;
-            bindings = <&kp LALT>;
-        };
-        combo_win_key_for_windows {
-            timeout-ms = <50>;
-            key-positions = <34 35>;
-            bindings = <&kp LWIN>;
+            key-positions = <0 1>;
+            bindings = <&kp ESC>;
+            layers = <GAME>;
         };
     };
 };
