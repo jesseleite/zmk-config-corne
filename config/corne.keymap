@@ -29,7 +29,7 @@
 #define SCRR  LC(RIGHT)      // Key-Press shorthand for Mission control space right
 #define BROL  LG(LA(LEFT))   // Key-Press shorthand for browser tab left
 #define BROR  LG(LA(RIGHT))  // Key-Press shorthand for browser tab right
-#define ZIN   LG(PLUS)       // Key-Press shorthand for zoom in
+#define ZIN   LG(EQUAL)      // Key-Press shorthand for zoom in
 #define ZOUT  LG(MINUS)      // Key-Press shorthand for zoom out
 #define ZRES  LG(N0)         // Key-Press shorthand for zoom reset
 #define FQUIT LG(LA(ESC))    // Key-Press shorthand for force quit applications dialog
@@ -41,7 +41,7 @@
 #define SCRRW LG(LC(RIGHT))  // Key-Press shorthand for virtual desktop right in Windows
 #define BROLW LC(LS(TAB))    // Key-Press shorthand for browser tab left in Windows
 #define BRORW LC(TAB)        // Key-Press shorthand for browser tab right in Windows
-#define ZINW  LC(PLUS)       // Key-Press shorthand for zoom in Windows
+#define ZINW  LC(EQUAL)      // Key-Press shorthand for zoom in Windows
 #define ZOUTW LC(MINUS)      // Key-Press shorthand for zoom out in Windows
 #define ZRESW LC(N0)         // Key-Press shorthand for zoom reset in Windows
 #define CADW  LC(LA(DEL))    // Key-Press shorthand for CTRL-ALT-DEL in Windows
