@@ -33,6 +33,10 @@
 #define ZOUT  LG(MINUS)      // Key-Press shorthand for zoom out
 #define ZRES  LG(N0)         // Key-Press shorthand for zoom reset
 #define FQUIT LG(LA(ESC))    // Key-Press shorthand for force quit applications dialog
+#define BTS0  BT_SEL 0       // Select Bluetooth profile 0
+#define BTS1  BT_SEL 1       // Select Bluetooth profile 1
+#define BTS2  BT_SEL 2       // Select Bluetooth profile 2
+#define BTS3  BT_SEL 3       // Select Bluetooth profile 3
 
 // Windows Specific Aliases
 #define ABSL  LALT BSLH      // Mod-Tap shorthand for ALT when held, BSLH when tapped
@@ -187,13 +191,13 @@
             bindings = <
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
             //  MAC LAYER              WINDOWS LAYER                                     SCREEN SWITCHING                                      FORCE QUIT
-                &to MAC     &none      &to WIN    &none      &none      &none            &kp SCRL   &none      &none      &kp SCRR   &none      &kp FQUIT
+                &to MAC    &none       &to WIN    &none      &none      &none            &kp SCRL   &none      &none      &kp SCRR   &none      &kp FQUIT
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-            //                                                       GAMING LAYER        BROWSER TAB SWITCHING
-                 &none      &none      &none      &none      &none       &to GAME        &kp BROL   &none      &none      &kp BROR   &none      &none
+            //             BLUETOOTH PROFILES                        GAMING LAYER        BROWSER TAB SWITCHING
+                 &none     &bt BTS0    &bt BTS1   &bt BTS2   &bt BTS3    &to GAME        &kp BROL   &none      &none      &kp BROR   &none      &none
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-            //             ZMK FLASH                                                     ZOOM IN, OUT, AND RESET
-                 &none     &bootloader &none      &none      &none      &none            &kp ZRES   &kp ZOUT   &kp ZIN    &none      &none      &none
+            //             ZMK FLASH                              BLUETOOTH CLEAR        ZOOM IN, OUT, AND RESET
+                 &none     &bootloader &none      &none      &none     &bt BT_CLR        &kp ZRES   &kp ZOUT   &kp ZIN    &none      &none      &none
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
             //
                                                   &trans     &trans     &trans           &trans     &trans     &trans
@@ -216,11 +220,11 @@
             //  MAC LAYER              WINDOWS LAYER                                     SCREEN SWITCHING                                    CTRL+ALT+DEL
                 &to MAC     &none      &to WIN    &none      &none      &none            &kp SCRLW  &none      &none      &kp SCRRW  &none      &kp CADW
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-            //                                                       GAMING LAYER        BROWSER TAB SWITCHING
-                 &none      &none      &none      &none      &none       &to GAME        &kp BROLW  &none      &none      &kp BRORW  &none      &none
+            //             BLUETOOTH PROFILES                        GAMING LAYER        BROWSER TAB SWITCHING
+                 &none     &bt BTS0    &bt BTS1   &bt BTS2   &bt BTS3    &to GAME        &kp BROLW  &none      &none      &kp BRORW  &none      &none
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-            //             ZMK FLASH                                                     ZOOM IN, OUT, AND RESET
-                 &none     &bootloader &none      &none      &none      &none            &kp ZRESW  &kp ZOUTW  &kp ZINW   &none      &none      &none
+            //             ZMK FLASH                              BLUETOOTH CLEAR        ZOOM IN, OUT, AND RESET
+                 &none     &bootloader &none      &none      &none     &bt BT_CLR        &kp ZRESW  &kp ZOUTW  &kp ZINW   &none      &none      &none
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
             //
                                                   &trans     &trans     &trans           &trans     &trans     &trans
