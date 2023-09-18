@@ -121,13 +121,16 @@
             //
                  &trans     &trans     &trans     &trans     &trans     &trans           &trans     &trans     &trans     &trans     &trans     &trans
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-            //                                    CTRL       LOWER TAP
-                                                  &kp LCTRL  &ltd LOWER &trans           &trans     &trans     &trans
+            //                                    CTRL TAP   LOWER TAP
+                                                  &ctrlalt   &ltd LOWER &trans           &trans     &trans     &trans
             //                                  +----------+----------+----------+     +----------+----------+----------+
             //
             // * Differences from default Windows layer:
             //   - Remove mod-tap functionality in left-most column to prevent unwanted key-presses while gaming
             //   - Combo TAB+Q in top left corner for easy access to ESC while gaming
+            //   - CTRL thumb tap-dance functionality added for easy access to ALT with right hand on mouse
+            //     - Tap once for CTRL
+            //     - Tap twice for ALT
             //   - LOWER layer tap-tance functionality added for easy access to one-shot numbers and function keys with right hand on mouse
             //     - Tap once for one-shot WIN_NUMBERS layer (great for weapon selection, unit group selection, etc.)
             //     - Tap twice for one-shot WIN_FUNCTION_KEYS layer (for games that use function keys)
@@ -293,7 +296,7 @@
             compatible = "zmk,behavior-hold-tap";
             label = "MOD_TAP_TAP_PREFERRED";
             #binding-cells = <2>;
-            tapping-term-ms = <100>;
+            tapping-term-ms = <200>;
             flavor = "tap-preferred";
             bindings = <&kp>, <&kp>;
         };
@@ -329,6 +332,14 @@
             tapping-term-ms = <150>;
             flavor = "hold-preferred";
             bindings = <&mo>, <&gaming_extra_layers>;
+        };
+
+        ctrlalt: ctrl_alt_tap_dance_for_gaming {
+            compatible = "zmk,behavior-tap-dance";
+            label = "WINDOWS_CTRL_ALT_TAP_DANCE";
+            #binding-cells = <0>;
+            tapping-term-ms = <250>;
+            bindings = <&kp LCTRL>, <&kp LALT>;
         };
 
         gaming_extra_layers: gaming_extra_layers {
