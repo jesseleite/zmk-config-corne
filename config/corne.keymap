@@ -168,13 +168,13 @@
             bindings = <
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
             //              FUNCTION KEYS 1-5                                            PAGE NAVIGATION
-                 &none      &kp F1     &kp F2     &kp F3     &kp F4     &kp F5           &kp HOME   &kp PG_DN  &kp PG_UP  &kp END    &none      &none
+                 &trans     &kp F1     &kp F2     &kp F3     &kp F4     &kp F5           &kp HOME   &kp PG_DN  &kp PG_UP  &kp END    &none      &none
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
             //              FUNCTION KEYS 6-10                                           HJKL ARROW KEYS
-                 &none      &kp F6     &kp F7     &kp F8     &kp F9     &kp F10          &kp LEFT   &kp DOWN   &kp UP     &kp RIGHT  &none      &none
+                 &trans     &kp F6     &kp F7     &kp F8     &kp F9     &kp F10          &kp LEFT   &kp DOWN   &kp UP     &kp RIGHT  &none      &none
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
             //              FUNCTION KEYS 11-12                                          MEDIA KEYS
-                 &none      &kp F11    &kp F12    &none      &none      &none            &kp MPREV  &kp VOLDN  &kp VOLUP  &kp MNEXT  &kp MMUTE  &kp MPLAY
+                 &trans     &kp F11    &kp F12    &none      &none      &none            &kp MPREV  &kp VOLDN  &kp VOLUP  &kp MNEXT  &kp MMUTE  &kp MPLAY
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
             //                                                          SEARCH
                                                   &trans     &trans     &kp SPOTL        &trans     &trans     &trans
