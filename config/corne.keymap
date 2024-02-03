@@ -345,13 +345,13 @@
     };
 
     macros {
-        open_and_close_parens: open_and_close_parens_for_improved_space_cadet_shifts {
+        open_and_close_parens: open_and_close_parens {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&macro_tap &kp LPAR &kp RPAR>;
         };
 
-        close_and_open_parens: close_and_open_parens_for_improved_space_cadet_shifts {
+        close_and_open_parens: close_and_open_parens {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&macro_tap &kp RPAR &kp LPAR>;
