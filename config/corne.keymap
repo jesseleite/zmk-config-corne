@@ -294,7 +294,6 @@
     behaviors {
         mtt: mod_tap_with_tap_preferred {
             compatible = "zmk,behavior-hold-tap";
-            label = "MOD_TAP_TAP_PREFERRED";
             #binding-cells = <2>;
             tapping-term-ms = <200>;
             flavor = "tap-preferred";
@@ -303,7 +302,6 @@
 
         lscsh: left_space_cadet_shift {
             compatible = "zmk,behavior-mod-morph";
-            label = "LEFT_SPACE_CADET_SHIFT";
             #binding-cells = <0>;
             bindings = <&mt LSHFT LPAR>, <&close_and_open_parens>;
             mods = <(MOD_RSFT)>;
@@ -311,7 +309,6 @@
 
         rscsh: right_space_cadet_shift {
             compatible = "zmk,behavior-mod-morph";
-            label = "RIGHT_SPACE_CADET_SHIFT";
             #binding-cells = <0>;
             bindings = <&mt RSHFT RPAR>, <&open_and_close_parens>;
             mods = <(MOD_LSFT)>;
@@ -319,7 +316,6 @@
 
         bkspd: backspace_or_shift_delete {
             compatible = "zmk,behavior-mod-morph";
-            label = "BACKSPACE_OR_SHIFT_DELETE";
             #binding-cells = <0>;
             bindings = <&kp BACKSPACE>, <&kp DELETE>;
             mods = <(MOD_LSFT)>;
@@ -327,7 +323,6 @@
 
         ltd: layer_tap_dance_for_gaming {
             compatible = "zmk,behavior-hold-tap";
-            label = "WINDOWS_LOWER_PLUS_TAP_DANCE";
             #binding-cells = <2>;
             tapping-term-ms = <150>;
             flavor = "hold-preferred";
@@ -336,7 +331,6 @@
 
         ctrlalt: ctrl_alt_tap_dance_for_gaming {
             compatible = "zmk,behavior-tap-dance";
-            label = "WINDOWS_CTRL_ALT_TAP_DANCE";
             #binding-cells = <0>;
             tapping-term-ms = <250>;
             bindings = <&kp LCTRL>, <&kp LALT>;
@@ -344,7 +338,6 @@
 
         gaming_extra_layers: gaming_extra_layers {
             compatible = "zmk,behavior-tap-dance";
-            label = "WINDOWS_LOWER_TAP_DANCE";
             #binding-cells = <0>;
             tapping-term-ms = <50>;
             bindings = <&sl WIN_NUMBERS>, <&sl WIN_FUNCTION_KEYS>;
@@ -353,14 +346,12 @@
 
     macros {
         open_and_close_parens: open_and_close_parens_for_improved_space_cadet_shifts {
-            label = "OPEN_AND_CLOSE_PARENS";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&macro_tap &kp LPAR &kp RPAR>;
         };
 
         close_and_open_parens: close_and_open_parens_for_improved_space_cadet_shifts {
-            label = "CLOSE_AND_OPEN_PARENS";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&macro_tap &kp RPAR &kp LPAR>;
