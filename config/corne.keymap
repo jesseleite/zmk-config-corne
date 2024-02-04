@@ -59,7 +59,7 @@
             //
             // * Notes:
             //   - In standard CAPS key position, hold for CTRL, or tap for ESC
-            //   - In standard TAB key position, hold for OPT, or tap for TAB
+            //   - In standard TAB key position, hold for ALT, or tap for TAB
             //   - In standard SHIFT key positions, hold for SHIFT, or tap for open `(` and close `)` parentheses (left and right respectively)
             //   - In standard backslash position, hold for ALT, or tap for `\`
             //   - In standard quote position, hold for WIN, or tap for `'`
