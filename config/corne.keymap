@@ -76,8 +76,8 @@
         lower_layer {
             bindings = <
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-            //   ~          !          @          #          $          %                ~          7          8          9          _          +
-                 &kp TILDE  &kp EXCL   &kp AT     &kp HASH   &kp DLLR   &kp PRCNT        &kp TILDE  &kp N7     &kp N8     &kp N9     &kp UNDER  &kp PLUS
+            //   ~          !          @          #          $          %                |          7          8          9          _          +
+                 &kp TILDE  &kp EXCL   &kp AT     &kp HASH   &kp DLLR   &kp PRCNT        &kp PIPE   &kp N7     &kp N8     &kp N9     &kp UNDER  &kp PLUS
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
             //   `          ^          &          *          :          <                >          4          5          6          -          =
                  &kp GRAVE  &kp CARET  &kp AMPS   &kp ASTRK  &kp COLON  &kp LT           &kp GT     &kp N4     &kp N5     &kp N6     &kp MINUS  &kp EQUAL
