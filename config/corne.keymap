@@ -16,6 +16,8 @@
 // Aliases
 #define OPTAB LALT TAB       // Mod-Tap shorthand for OPTION when held, TAB when tapped
 #define CTESC LCTRL ESC      // Mod-Tap shorthand for CTRL when held, ESC when tapped
+#define LWRT  LOWER F13      // Hold for lower layer, tap for app launcher modal
+#define CMDO  LGUI F14       // Hold for cmd, tap for macros modal
 #define RAI0  RAISE N0       // Mod-Tap shorthand for RAISE layer when held, or numpad 0 when typed
 #define SPOTL LG(SPACE)      // Key-Press shorthand for CMD-SPACE Spotlight / Raycast / etc. search
 #define MPREV C_PREV         // Key-Press shorthand for PREV media key
@@ -67,7 +69,7 @@
                  &lscsh     &kp Z      &kp X      &kp C      &kp V      &kp B            &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH   &rscsh
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
             //                                    CMD        LOWER      SPACE            ENTER      RAISE      BKSP DEL
-                                                  &kp LGUI   &mo LOWER  &kp SPACE        &kp ENTER  &mo RAISE  &bkspd
+                                                  &mt CMDO   &lth LWRT  &kp SPACE        &kp ENTER  &mo RAISE  &bkspd
             //                                  +----------+----------+----------+     +----------+----------+----------+
             //
             // * Notes:
@@ -314,6 +316,14 @@
             #binding-cells = <0>;
             bindings = <&kp BACKSPACE>, <&kp DELETE>;
             mods = <(MOD_LSFT)>;
+        };
+
+        lth: layer_tap_hold_preferred {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <150>;
+            flavor = "hold-preferred";
+            bindings = <&mo>, <&kp>;
         };
 
         ltd: layer_tap_dance_for_gaming {
