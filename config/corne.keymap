@@ -7,11 +7,10 @@
 #define WIN 1
 #define GAME 2
 #define LOWER 3
-#define RAISE 4
-#define MASH 5
-#define WIN_MASH 6
-#define WIN_NUMBERS 7
-#define WIN_FUNCTION_KEYS 8
+#define GAME_LOWER 4
+#define RAISE 5
+#define MASH 6
+#define WIN_MASH 7
 
 // Aliases
 #define OPTAB LALT TAB       // Mod-Tap shorthand for OPTION when held, TAB when tapped
@@ -99,12 +98,15 @@
             //
                  &trans     &trans     &trans     &trans     &trans     &trans           &trans     &trans     &trans     &trans     &trans     &trans
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-            //                                    CTRL
-                                                  &kp LCTRL  &trans     &trans           &trans     &trans     &trans
+            //                                    CTRL TAP
+                                                  &ctrlalt   &trans     &trans           &trans     &trans     &trans
             //                                  +----------+----------+----------+     +----------+----------+----------+
             //
             // * Differences from above default Mac layer:
             //   - CTRL instead of CMD on thumb for easy copy/paste/etc. in Windows
+            //   - CTRL thumb tap-dance for easy access to ALT, when right hand is on mouse
+            //     - Tap once for CTRL
+            //     - Tap twice for ALT
             //   - In standard backslash position, hold for ALT, or tap for `\`
             //   - In standard quote position, hold for WIN, or tap for `'`
             >;
@@ -119,23 +121,19 @@
             //   CTRL                                                                                                                           WIN ' "
                  &kp LCTRL  &trans     &trans     &trans     &trans     &trans           &trans     &trans     &trans     &trans     &trans     &mtt WSQT
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-            //
-                 &trans     &trans     &trans     &trans     &trans     &trans           &trans     &trans     &trans     &trans     &trans     &trans
+            //   SHIFT
+                 &kp LSHFT  &trans     &trans     &trans     &trans     &trans           &trans     &trans     &trans     &trans     &trans     &trans
             // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-            //                                    CTRL TAP   LOWER TAP
-                                                  &ctrlalt   &ltd LOWER &trans           &trans     &trans     &trans
+            //                                    CTRL TAP   LOWER GAMING
+                                                  &ctrlalt   &lwrg       &trans           &trans     &trans     &trans
             //                                  +----------+----------+----------+     +----------+----------+----------+
             //
             // * Differences from default Windows layer:
-            //   - Remove mod-tap functionality in left-most column to prevent unwanted key-presses while gaming
             //   - Combo TAB+Q in top left corner for easy access to ESC while gaming
-            //   - CTRL thumb tap-dance functionality added for easy access to ALT with right hand on mouse
-            //     - Tap once for CTRL
-            //     - Tap twice for ALT
-            //   - LOWER layer tap-tance functionality added for easy access to one-shot numbers and function keys with right hand on mouse
-            //     - Tap once for one-shot WIN_NUMBERS layer (great for weapon selection, unit group selection, etc.)
-            //     - Tap twice for one-shot WIN_FUNCTION_KEYS layer (for games that use function keys)
-            //     - Hold for standard LOWER layer
+            //   - Remove mod-tap and space cadet shift magic in left-most column, so that they don't interfere with gaming
+            //   - See other layers for more:
+            //     - Lower layer is customized for gaming, with access to numbers and function keys on left split
+            //     - Touble tap and hold for access to normal symbols lower layer
             >;
         };
 
@@ -158,6 +156,30 @@
             // * Notes:
             //   - Almost all symbols accessible on this layer
             //   - Numpad under right hand
+            >;
+        };
+
+        lower_gaming_layer {
+            bindings = <
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //              1          2          3          4          5                           7          8          9          _          +
+                 &trans     &kp N1     &kp N2     &kp N3     &kp N4     &kp N5           &none      &kp N7     &kp N8     &kp N9     &kp UNDER  &kp PLUS
+            // +----------+----------+----------+----------+----------+----------+    +----------+----------+----------+----------+----------+----------+
+            //              6          7          8          9          0                           4          5          6          -          =
+                 &trans     &kp N6     &kp N7     &kp N8     &kp N9     &kp N0           &none      &kp N4     &kp N5     &kp N6     &kp MINUS  &kp EQUAL
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //              F1         F2         F3         F4         F5               (          1          2          3          /          )
+                 &trans     &kp F1     &kp F2     &kp F3     &kp F4     &kp F5           &kp LPAR   &kp N1     &kp N2     &kp N3     &kp FSLH   &kp RPAR
+            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
+            //                                                                                      0 RAISE
+                                                  &trans     &trans     &trans           &trans     &lt RAI0   &trans
+            //                                  +----------+----------+----------+     +----------+----------+----------+
+            //
+            // * Notes:
+            //     - Basically same as standard lower layer, but with access to numbers and function keys on left split
+            //       - But I left numpad on right split, since it doesn't hurt anybody to be there
+            //     - For typing normal symbols layer while gaming, double tap and hold lower layer thumb
+            //       - Though I moved left opening `(` paren to right split, since it's nowhere to be found on standard symbols layer
             >;
         };
 
@@ -236,40 +258,6 @@
             >;
         };
 
-        windows_gaming_numbers {
-            bindings = <
-            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-                 &none      &kp N1     &kp N2     &kp N3     &kp N4     &kp N5           &none      &none      &none      &none      &none      &none
-            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-                 &none      &kp N6     &kp N7     &kp N8     &kp N9     &kp N0           &none      &none      &none      &none      &none      &none
-            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-                 &none      &none      &none      &none      &none      &none            &none      &none      &none      &none      &none      &none
-            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-                                                  &trans     &trans     &trans           &trans     &trans     &trans
-            //                                  +----------+----------+----------+     +----------+----------+----------+
-            //
-            // * Note: This is only meant to be accessed via the LOWER key tap-dance on the GAME layer
-            //   - Single tap to access numbers with left hand, while right hand is on mouse
-            >;
-        };
-
-        windows_gaming_function_keys {
-            bindings = <
-            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-                 &none      &kp F1     &kp F2     &kp F3     &kp F4     &kp F5           &none      &none      &none      &none      &none      &none
-            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-                 &none      &kp F6     &kp F7     &kp F8     &kp F9     &kp F10          &none      &none      &none      &none      &none      &none
-            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-                 &none      &none      &none      &none      &none      &none            &none      &none      &none      &none      &none      &none
-            // +----------+----------+----------+----------+----------+----------+     +----------+----------+----------+----------+----------+----------+
-                                                  &trans     &trans     &trans           &trans     &trans     &trans
-            //                                  +----------+----------+----------+     +----------+----------+----------+
-            //
-            // * Note: This is only meant to be accessed via the LOWER key tap-dance on the GAME layer
-            //   - Double tap to function keys with left hand, while right hand is on mouse
-            >;
-        };
-
     };
 
     conditional_layers {
@@ -283,7 +271,7 @@
             then-layer = <WIN_MASH>;
         };
         windows_gaming_mash_both_layers {
-            if-layers = <GAME LOWER RAISE>;
+            if-layers = <GAME GAME_LOWER RAISE>;
             then-layer = <WIN_MASH>;
         };
     };
@@ -326,14 +314,6 @@
             bindings = <&mo>, <&kp>;
         };
 
-        ltd: layer_tap_dance_for_gaming {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            tapping-term-ms = <150>;
-            flavor = "hold-preferred";
-            bindings = <&mo>, <&gaming_extra_layers>;
-        };
-
         ctrlalt: ctrl_alt_tap_dance_for_gaming {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
@@ -341,11 +321,11 @@
             bindings = <&kp LCTRL>, <&kp LALT>;
         };
 
-        gaming_extra_layers: gaming_extra_layers {
+        lwrg: lower_layer_tap_dance_for_gaming {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <50>;
-            bindings = <&sl WIN_NUMBERS>, <&sl WIN_FUNCTION_KEYS>;
+            tapping-term-ms = <250>;
+            bindings = <&mo GAME_LOWER>, <&mo LOWER>;
         };
     };
 
@@ -387,4 +367,5 @@
             layers = <GAME>;
         };
     };
+
 };
